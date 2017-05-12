@@ -1,177 +1,72 @@
 import React, { Component } from 'react';
 import '../../styles/index.css';
+import  'react-bootstrap';
+import { Button,FormGroup,ControlLabel,FormControl,HelpBlock,ButtonToolbar,Col,bsStyle} from 'react-bootstrap';
+import Popup from 'react-popup';
+
 // import { Router, Route, Link, browserHistory, IndexRoute  } from 'react-router'
 
+function FieldGroup({ id, label, help, ...props }) {
+return (
+  <FormGroup controlId={id} bsSize= "small">
+    <ControlLabel>{label}</ControlLabel>
+    <FormControl {...props} />
+    {help && <HelpBlock>{help}</HelpBlock>}
+  </FormGroup>
+)
+}
 class FloorType extends Component {
   constructor(props) {
     super(props);
-    this.state={list:[],searchSet:{
-    name:"",
-  },isSearchClicked:false,floorTypeList:[],type:""}
-    this.handleChange=this.handleChange.bind(this);
-    this.search=this.search.bind(this);
-    this.updateType=this.updateType.bind(this);
-
-  }
-
-  search(e)
-  {
-    e.preventDefault();
-    // var type = getUrlVars()["id"];
-
-    console.log(e);
-    console.log(this.state.type);
-      if(this.state.type==="Update")
-
-        return (  window.location.href='app/create/create-floor-type.html?type=Update')
-        //console.log(type);
-      //
-      //
-      else
-
-
-        return (  window.location.href='app/create/create-floor-type.html?type=View')
-
-
-
-    //call api call
-    //  var list=commonApiPost("asset-services","assets","_search",this.state.searchSet).responseJSON["Assets"] ||[];
-
-
-    // $('#agreementTable').DataTable().draw();
-    // console.log($('#agreementTable').length);
-
-  }
-
-  componentWillMount()
-  {
-
-
-  }
-
-
-
-  componentDidMount()
-  {
-
-      this.setState({
-
-        floorTypeList: [{
-                id: "cement",
-                name: "Cement",
-
-            },
-            {
-                id: "MUD",
-                name: "MUD",
-
-            },
-            {
-              id: "sw",
-              name: "SW",
-            },
-            {
-              id: "TILES",
-              name: "TILES",
-
-            },
-            {
-              id:"MARBEL",
-              name:"MARBEL",
-            }]
-
-
-  })
+    this.state = {
+      floorType:{
+        name:""
+      }
+    }
 
 }
 
 
-  handleChange(e,name)
-  {
 
-      this.setState({
-          searchSet:{
-              ...this.state.searchSet,
-              [name]:e.target.value
-          }
-      })
 
-  }
 
 
   close(){
       // widow.close();
       open(location, '_self').close();
   }
-  updateType(e, type){
-    // console.log("hi");
-    this.setState({
-      type
-    })
-  }
-
 
 
   render() {
-    let {handleChange,search,updateType}=this;
-    let {isSearchClicked,list}=this.state;
-    let {name}=this.state.searchSet;
-
-    const renderOption=function(list)
-    {
-        if(list)
-        {
-            return list.map((item)=>
-            {
-                return (<option key={item.id} value={item.id}>
-                        {item.name}
-                  </option>)
-            })
-        }
-    }
-
+    let {name}=this.state.floorType;
 
     return (
-    <div>
-            <form onSubmit={(e)=>{search(e)}}>
-            <div className="row">
-                <div className="col-sm-9">
-                    <div className="row">
-                        <div className="col-sm-4 label-text">
-                            <label for="name">Name <span> * </span></label>
-                        </div>
-                        <div className="col-sm-8">
-                            <div className="styled-select">
-                                <select id="name" name="name" value={name}
-                  onChange={(e)=>{  handleChange(e,"name")}} required>
+      <form>
 
-                                  <option value="">Choose name</option>
-                                  {renderOption(this.state.floorTypeList)}
+      <FormGroup controlId="formControlsSelect">
+      <Col componentClass={ControlLabel} sm={2}>
+      Select Name </Col>
 
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-
-
-
-
-                <div className="text-center">
-                <button type="button" className="btn btn-danger" onClick={(e)=>{window.location.href='app/create/create-roof-type.html?type=Create'}}>Create</button>
-                &nbsp;
-                <button type="submit" className="btn btn-submit" id="Update" value="Update" onClick={(e)=>{  updateType(e,"Update")}}>Update</button>
-                &nbsp;
-
-                    <button type="submit" className="btn btn-submit" value="View" onClick={(e)=>{  updateType(e,"View")}} >View</button>
-                    &nbsp;
-                    <button type="button" className="btn btn-close" onClick={(e)=>{this.close()}}>Close</button>
-                </div>
-                </form>
+       <Col componentClass={ControlLabel} sm={5}>
+      <FormControl componentClass="select" controlId="formControlsSelect" placeholder="select">
+        <option value="select">Tyles</option>
+        <option value="other">Cement</option>
+      </FormControl>
+      </Col>
+    </FormGroup>
+    <FormGroup>
+     <Col smOffset={2} sm={10}>
+          <ButtonToolbar>
+            <Button bsStyle="danger">Create</Button>
+            <Button bsStyle="default">Update</Button>
+            <Button bsStyle="default">view</Button>
+            <Button bsStyle="default">Close</Button>
+          </ButtonToolbar>
+          </Col>
+          </FormGroup>
+        </form>
 
 
-          </div>
           );
       }
 }

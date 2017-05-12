@@ -3,6 +3,7 @@ import '../styles/App.css';
 import Header from './common/Header';
 import FloorType from './contents/FloorType';
 import Sidebar from './common/Sidebar';
+import 'bootstrap/less/bootstrap.less';
 
 
 class App extends Component {
